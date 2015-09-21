@@ -1,5 +1,5 @@
 {
-	"name": "cmsgears/widget-aform",
+	"name": "cmsgears/widget-form-ajax",
 	"description": "The Ajax Form Widget for CMSGears. It provide options to generate ajax forms stored in db.",
 	"homepage": "http://www.cmsgears.org",
 	"type": "package",
