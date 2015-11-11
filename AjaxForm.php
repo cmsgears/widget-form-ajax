@@ -40,6 +40,7 @@ class AjaxForm extends \cmsgears\widgets\form\BaseForm {
 		$this->form		= FormService::findBySlug( $this->slug );
 		$fields			= $this->form->fields;
 		$fieldsHtml		= '';
+		$captchaHtml	= null;
 
 		// Paths
 		$formPath		= $this->viewFile . '/form';
@@ -89,10 +90,10 @@ class AjaxForm extends \cmsgears\widgets\form\BaseForm {
 		
 		if( $this->form->captcha ) {
 			
-			$fieldsHtml	   .= $this->render( $captchaPath );
+			$captchaHtml	= $this->render( $captchaPath );
 		}
 
-		$formHtml 		= $this->render( $formPath, [ 'fieldsHtml' => $fieldsHtml ] );
+		$formHtml 		= $this->render( $formPath, [ 'fieldsHtml' => $fieldsHtml, 'captchaHtml' => $captchaHtml ] );
 
 		$this->options[ 'action' ]			= $this->ajaxUrl;
 		$this->options[ 'method' ]			= 'post';
