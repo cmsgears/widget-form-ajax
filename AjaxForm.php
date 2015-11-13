@@ -43,9 +43,9 @@ class AjaxForm extends \cmsgears\widgets\form\BaseForm {
 		$captchaHtml	= null;
 
 		// Paths
-		$formPath		= $this->viewFile . '/form';
-		$fieldPath		= $this->viewFile . '/field';
-		$captchaPath	= $this->viewFile . '/captcha';
+		$formPath		= $this->template . '/form';
+		$fieldPath		= $this->template . '/field';
+		$captchaPath	= $this->template . '/captcha';
 
 		if( !isset( $this->ajaxUrl ) ) {
 
