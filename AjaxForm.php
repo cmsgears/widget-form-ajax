@@ -25,9 +25,11 @@ class AjaxForm extends \cmsgears\widgets\form\BaseForm {
 	// yii\base\Widget
 
 	public function run() {
+		
+		if( $this->loadAssets ) {
 
-		// TODO Remove comment after adding cmgtools to bower.
-		// FormAssetBundle::register( $this->getView() );
+			FormAssetBundle::register( $this->getView() );
+		}
 
 		return parent::run();
     }

@@ -1,24 +1,13 @@
-// Forms ------------------------------
+FormController	= function() {
 
-function postFormProcessorSuccess( formId, controllerId, actionId, data ) {
+};
 
-	switch( controllerId ) {
+FormController.inherits( cmt.api.controllers.BaseController );
 
-		case 'form': {
+FormController.prototype.genericActionPost = function( success, parentElement, message, response ) {
+	
+	if( success ) {
 
-			switch( actionId ) {
-
-				case 'generic': {
-
-					window.location.replace( loginUrl );
-
-					break;
-				}
-			}
-
-			break;
-		}
+		console.log( "form processed successfully." );
 	}
-}
-
-postCmtApiProcessor.addSuccessListener( postFormProcessorSuccess );
+};
