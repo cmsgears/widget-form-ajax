@@ -7,9 +7,9 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 // CMG Imports
-use cmsgears\forms\common\models\entities\FormField;
+use cmsgears\core\common\services\FormService;
 
-use cmsgears\forms\common\services\FormService;
+use cmsgears\core\common\utilities\FormUtil;
 
 class AjaxForm extends \cmsgears\widgets\form\BaseForm {
 
@@ -19,6 +19,8 @@ class AjaxForm extends \cmsgears\widgets\form\BaseForm {
 
 	public $slug;
 	public $ajaxUrl;
+	public $cmtController	= null;
+	public $cmtAction		= null;
 
 	// Instance Methods --------------------------------------------
 
@@ -37,79 +39,64 @@ class AjaxForm extends \cmsgears\widgets\form\BaseForm {
 	// AjaxForm
 
     public function renderForm() {
-    	
+
 		// Form and Fields
 		$this->form		= FormService::findBySlug( $this->slug );
-		
+
 		if( isset( $this->form ) && $this->form->active ) {
 
-			$fields			= $this->form->fields;
-			$fieldsHtml		= '';
+			// fields and html
+			$fieldsHtml		= FormUtil::getApixFieldsHtml( $this->form, [ 'label' => $this->showLabel ] );
 			$captchaHtml	= null;
-	
-			// Paths
-			$formPath		= $this->template . '/form';
-			$fieldPath		= $this->template . '/field';
-			$captchaPath	= $this->template . '/captcha';
-	
+
+			// Views Path
+			$formPath		= "$this->template/form";
+			$captchaPath	= "$this->template/captcha";
+
+			// submit url
 			if( !isset( $this->ajaxUrl ) ) {
-	
+
 				$formSlug		= $this->form->slug;
-				$this->ajaxUrl	= Url::toRoute( [ "/cmgforms/apix/site/index?form=$formSlug" ] );	
+				$this->ajaxUrl	= Url::toRoute( [ "/apix/form/$formSlug" ], true );	
 			}
-	
-			foreach ( $fields as $field ) {
-				
-				$fieldHtml	= null;
-	
-				if( isset( $field->options ) ) {
-	
-					$field->options	= json_decode( $field->options, true );
-				}
-				else {
-	
-					$field->options	= [];
-				}
-	
-				switch( $field->type ) {
-	
-					case FormField::TYPE_TEXT: {
-	
-						$fieldHtml = Html::input( 'text', "GenericForm[$field->name]", null, $field->options );
-	
-						break;
-					}
-					case FormField::TYPE_TEXTAREA: {
-	
-						$fieldHtml = Html::textarea( "GenericForm[$field->name]", null, $field->options );
-	
-						break;
-					}
-				}
-	
-				$fieldsHtml	   .= $this->render( $fieldPath, [
-																'field' => $field, 
-																'fieldHtml' => $fieldHtml 
-															]);
-			}
-			
+
 			if( $this->form->captcha ) {
-				
+
 				$captchaHtml	= $this->render( $captchaPath );
 			}
-	
+
 			$formHtml 		= $this->render( $formPath, [ 'fieldsHtml' => $fieldsHtml, 'captchaHtml' => $captchaHtml ] );
-	
+
 			$this->options[ 'action' ]			= $this->ajaxUrl;
 			$this->options[ 'method' ]			= 'post';
 			$this->options[ 'cmt-controller' ]	= 'form';
 			$this->options[ 'cmt-action' ]		= 'generic';
-	
+
+			if( !isset( $this->options[ 'class' ] ) ) {
+
+				$this->options[ 'class' ]	= 'cmt-form';
+			}
+
+			if( !isset( $this->options[ 'id' ] ) ) {
+
+				$this->options[ 'id' ]	= "frm-$this->slug";
+			}
+
+			if( isset( $this->cmtController ) ) {
+
+				$this->options[ 'cmt-controller' ]	= $this->cmtController;
+			}
+
+			if( isset( $this->cmtAction ) ) {
+
+				$this->options[ 'cmt-action' ]	= $this->cmtAction;
+			}
+
 	        return Html::tag( 'form', $formHtml, $this->options );
 		}
 		else {
-			
-			echo "<div class='warning'>Form submission is disabled by site admin.</div>";	
+
+			echo "<div class='warning'>Form not found or submission is disabled by site admin.</div>";	
 		}
 	}
 }
