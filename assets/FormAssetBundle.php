@@ -1,5 +1,5 @@
 <?php
-namespace cmsgears\widgets\aform;
+namespace cmsgears\widgets\aform\assets;
 
 // Yii Imports
 use yii\web\AssetBundle;

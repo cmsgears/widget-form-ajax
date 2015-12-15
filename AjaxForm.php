@@ -8,6 +8,7 @@ use yii\helpers\Url;
 
 // CMG Imports
 use cmsgears\core\common\services\FormService;
+use cmsgears\widgets\aform\assets\FormAssetBundle;
 
 use cmsgears\core\common\utilities\FormUtil;
 
