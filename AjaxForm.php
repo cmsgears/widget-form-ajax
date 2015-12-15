@@ -28,7 +28,7 @@ class AjaxForm extends \cmsgears\widgets\form\BaseForm {
 	// yii\base\Widget
 
 	public function run() {
-		
+
 		if( $this->loadAssets ) {
 
 			FormAssetBundle::register( $this->getView() );
