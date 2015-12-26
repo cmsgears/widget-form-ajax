@@ -1,23 +1,105 @@
 <?php
 namespace cmsgears\widgets\aform;
 
+// Yii Imports
 use \Yii;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
-class AjaxForm extends cmsgears\widgets\form\BaseForm {
+// CMG Imports
+use cmsgears\core\common\services\FormService;
+use cmsgears\widgets\aform\assets\FormAssetBundle;
+
+use cmsgears\core\common\utilities\FormUtil;
+
+class AjaxForm extends \cmsgears\widgets\form\BaseForm {
 
 	// Variables ---------------------------------------------------
 
 	// Public Variables --------------------
 
-
-	// Constructor and Initialisation ------------------------------
-
+	public $slug;
+	public $ajaxUrl;
+	public $cmtController	= null;
+	public $cmtAction		= null;
 
 	// Instance Methods --------------------------------------------
 
-	// BasicForm
+	// yii\base\Widget
 
+	public function run() {
+
+		if( $this->loadAssets ) {
+
+			FormAssetBundle::register( $this->getView() );
+		}
+
+		return parent::run();
+    }
+
+	// AjaxForm
+
+    public function renderForm() {
+
+		// Form and Fields
+		$this->form		= FormService::findBySlug( $this->slug );
+
+		if( isset( $this->form ) && $this->form->active ) {
+
+			// fields and html
+			$fieldsHtml		= FormUtil::getApixFieldsHtml( $this->form, [ 'label' => $this->showLabel ] );
+			$captchaHtml	= null;
+
+			// Views Path
+			$formPath		= "$this->template/form";
+			$captchaPath	= "$this->template/captcha";
+
+			// submit url
+			if( !isset( $this->ajaxUrl ) ) {
+
+				$formSlug		= $this->form->slug;
+				$this->ajaxUrl	= Url::toRoute( [ "/apix/form/$formSlug" ], true );	
+			}
+
+			if( $this->form->captcha ) {
+
+				$captchaHtml	= $this->render( $captchaPath );
+			}
+
+			$formHtml 		= $this->render( $formPath, [ 'fieldsHtml' => $fieldsHtml, 'captchaHtml' => $captchaHtml ] );
+
+			$this->options[ 'action' ]			= $this->ajaxUrl;
+			$this->options[ 'method' ]			= 'post';
+			$this->options[ 'cmt-controller' ]	= 'form';
+			$this->options[ 'cmt-action' ]		= 'generic';
+
+			if( !isset( $this->options[ 'class' ] ) ) {
+
+				$this->options[ 'class' ]	= 'cmt-form';
+			}
+
+			if( !isset( $this->options[ 'id' ] ) ) {
+
+				$this->options[ 'id' ]	= "frm-$this->slug";
+			}
+
+			if( isset( $this->cmtController ) ) {
+
+				$this->options[ 'cmt-controller' ]	= $this->cmtController;
+			}
+
+			if( isset( $this->cmtAction ) ) {
+
+				$this->options[ 'cmt-action' ]	= $this->cmtAction;
+			}
+
+	        return Html::tag( 'form', $formHtml, $this->options );
+		}
+		else {
+
+			echo "<div class='warning'>Form not found or submission is disabled by site admin.</div>";	
+		}
+	}
 }
 
 ?>
