@@ -42,12 +42,15 @@ class AjaxForm extends \cmsgears\widgets\form\BaseForm {
     public function renderForm() {
 
 		// Form and Fields
-		$this->form		= FormService::findBySlug( $this->slug );
+		if( !isset( $this->form ) && isset( $this->slug ) ) {
+
+			$this->form		= FormService::findBySlug( $this->slug );
+		}
 
 		if( isset( $this->form ) && $this->form->active ) {
 
 			// fields and html
-			$fieldsHtml		= FormUtil::getApixFieldsHtml( $this->form, [ 'label' => $this->showLabel ] );
+			$fieldsHtml		= FormUtil::getApixFieldsHtml( $this->form, $this->model, [ 'label' => $this->showLabel ] );
 			$captchaHtml	= null;
 
 			// Views Path
