@@ -50,7 +50,7 @@ class AjaxForm extends \cmsgears\widgets\form\BaseForm {
 		if( isset( $this->form ) && $this->form->active ) {
 
 			// fields and html
-			$fieldsHtml		= FormUtil::getApixFieldsHtml( $this->form, $this->model, [ 'label' => $this->showLabel ] );
+			$fieldsHtml		= FormUtil::getApixFieldsHtml( $this->form, $this->model, [ 'label' => $this->showLabel, 'modelName' => $this->modelName ] );
 			$captchaHtml	= null;
 
 			// Views Path
