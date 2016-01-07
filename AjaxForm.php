@@ -7,8 +7,9 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 // CMG Imports
+use cmsgears\widgets\aform\assets\FormAssets;
+
 use cmsgears\core\common\services\FormService;
-use cmsgears\widgets\aform\assets\FormAssetBundle;
 
 use cmsgears\core\common\utilities\FormUtil;
 
@@ -31,7 +32,7 @@ class AjaxForm extends \cmsgears\widgets\form\BaseForm {
 
 		if( $this->loadAssets ) {
 
-			FormAssetBundle::register( $this->getView() );
+			FormAssets::register( $this->getView() );
 		}
 
 		return parent::run();
