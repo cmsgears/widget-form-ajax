@@ -40,7 +40,7 @@ class AjaxForm extends \cmsgears\widgets\form\BaseForm {
 
 	// AjaxForm
 
-    public function renderForm() {
+    public function renderWidget( $config = [] ) {
 
 		// Form and Fields
 		if( !isset( $this->form ) && isset( $this->slug ) ) {
