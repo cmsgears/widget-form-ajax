@@ -6,8 +6,8 @@
 
 <?= $captchaHtml ?>
 
-<div class="frm-actions">
-	<input class="submit" type="submit" name="submit" value="SEND">
+<div class="frm-actions align align-middle">
+	<input class="btn btn-small" type="submit" name="submit" value="Submit">
 </div>
 
 <div class="message warning"></div>
