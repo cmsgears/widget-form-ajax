@@ -6,7 +6,7 @@
 
 <?= $captchaHtml ?>
 
-<div class="frm-actions align align-middle">
+<div class="frm-actions align align-center">
 	<input class="btn btn-small" type="submit" name="submit" value="Submit">
 </div>
 
