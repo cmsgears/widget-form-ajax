@@ -62,7 +62,7 @@ class AjaxForm extends \cmsgears\widgets\form\BaseForm {
 			if( !isset( $this->ajaxUrl ) ) {
 
 				$formSlug		= $this->form->slug;
-				$this->ajaxUrl	= Url::toRoute( [ "/apix/form/$formSlug" ], true );	
+				$this->ajaxUrl	= "form/$formSlug";	
 			}
 
 			if( $this->form->captcha ) {
