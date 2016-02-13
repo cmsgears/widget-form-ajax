@@ -32,7 +32,7 @@ class FormAssets extends \yii\web\AssetBundle {
 	// Define dependent Asset Loaders
     public $depends = [
 		'yii\web\JqueryAsset',
-		'cmsgears\core\common\assets\CmgTools'
+		'cmsgears\core\common\assets\CmgToolsJs'
     ];
 
 	// Constructor and Initialisation ------------------------------
