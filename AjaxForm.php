@@ -9,7 +9,7 @@ use yii\helpers\Url;
 // CMG Imports
 use cmsgears\widgets\aform\assets\FormAssets;
 
-use cmsgears\core\common\services\FormService;
+use cmsgears\core\common\services\resources\FormService;
 
 use cmsgears\core\common\utilities\FormUtil;
 
@@ -62,7 +62,7 @@ class AjaxForm extends \cmsgears\widgets\form\BaseForm {
 			if( !isset( $this->ajaxUrl ) ) {
 
 				$formSlug		= $this->form->slug;
-				$this->ajaxUrl	= "form/$formSlug";	
+				$this->ajaxUrl	= "form/$formSlug";
 			}
 
 			if( $this->form->captcha ) {
@@ -101,7 +101,7 @@ class AjaxForm extends \cmsgears\widgets\form\BaseForm {
 		}
 		else {
 
-			echo "<div class='warning'>Form not found or submission is disabled by site admin.</div>";	
+			echo "<div class='warning'>Form not found or submission is disabled by site admin.</div>";
 		}
 	}
 }
