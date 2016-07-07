@@ -7,9 +7,9 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 // CMG Imports
-use cmsgears\widgets\aform\assets\FormAssets;
+use cmsgears\core\common\config\CoreGlobal;
 
-use cmsgears\core\common\services\resources\FormService;
+use cmsgears\widgets\aform\assets\FormAssets;
 
 use cmsgears\core\common\utilities\FormUtil;
 
@@ -17,16 +17,50 @@ class AjaxForm extends \cmsgears\widgets\form\BaseForm {
 
 	// Variables ---------------------------------------------------
 
-	// Public Variables --------------------
+	// Globals -------------------------------
+
+	// Constants --------------
+
+	// Public -----------------
+
+	// Protected --------------
+
+	// Variables -----------------------------
+
+	// Public -----------------
 
 	public $slug;
+	public $type			= CoreGlobal::TYPE_SYSTEM;
+
 	public $ajaxUrl;
+
 	public $cmtController	= null;
 	public $cmtAction		= null;
 
-	// Instance Methods --------------------------------------------
+	// Protected --------------
 
-	// yii\base\Widget
+	protected $formService;
+
+	// Private ----------------
+
+	// Traits ------------------------------------------------------
+
+	// Constructor and Initialisation ------------------------------
+
+	public function init() {
+
+		parent::init();
+
+		$this->formService = Yii::$app->factory->get( 'formService' );
+	}
+
+	// Instance methods --------------------------------------------
+
+	// Yii interfaces ------------------------
+
+	// Yii parent classes --------------------
+
+	// yii\base\Widget --------
 
 	public function run() {
 
@@ -38,14 +72,16 @@ class AjaxForm extends \cmsgears\widgets\form\BaseForm {
 		return parent::run();
     }
 
-	// AjaxForm
+	// CMG interfaces ------------------------
+
+	// CMG parent classes --------------------
 
     public function renderWidget( $config = [] ) {
 
 		// Form and Fields
 		if( !isset( $this->form ) && isset( $this->slug ) ) {
 
-			$this->form		= FormService::findBySlug( $this->slug );
+			$this->form		= $this->formService->getBySlugType( $this->slug, $this->type );
 		}
 
 		if( isset( $this->form ) && $this->form->active ) {
@@ -104,6 +140,8 @@ class AjaxForm extends \cmsgears\widgets\form\BaseForm {
 			echo "<div class='warning'>Form not found or submission is disabled by site admin.</div>";
 		}
 	}
+
+	// AjaxForm ------------------------------
 }
 
 ?>
