@@ -30,7 +30,7 @@ class AjaxForm extends \cmsgears\widgets\form\BaseForm {
 	// Public -----------------
 
 	public $slug;
-	public $type			= CoreGlobal::TYPE_SYSTEM;
+	public $type			= CoreGlobal::TYPE_SITE;
 
 	public $ajaxUrl;
 
