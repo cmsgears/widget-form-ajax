@@ -2,10 +2,9 @@
 namespace cmsgears\widgets\aform\assets;
 
 // Yii Imports
-use yii\web\AssetBundle;
 use yii\web\View;
 
-class FormAssetBundle extends AssetBundle {
+class FormAssets extends \yii\web\AssetBundle {
 
 	// Public variables --------------------------------------------
 
@@ -33,7 +32,7 @@ class FormAssetBundle extends AssetBundle {
 	// Define dependent Asset Loaders
     public $depends = [
 		'yii\web\JqueryAsset',
-		'cmsgears\core\common\assets\CMTAssetBundle'
+		'cmsgears\core\common\assets\CmgToolsJs'
     ];
 
 	// Constructor and Initialisation ------------------------------

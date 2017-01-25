@@ -7,8 +7,9 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 // CMG Imports
-use cmsgears\core\common\services\FormService;
-use cmsgears\widgets\aform\assets\FormAssetBundle;
+use cmsgears\core\common\config\CoreGlobal;
+
+use cmsgears\widgets\aform\assets\FormAssets;
 
 use cmsgears\core\common\utilities\FormUtil;
 
@@ -16,38 +17,77 @@ class AjaxForm extends \cmsgears\widgets\form\BaseForm {
 
 	// Variables ---------------------------------------------------
 
-	// Public Variables --------------------
+	// Globals -------------------------------
+
+	// Constants --------------
+
+	// Public -----------------
+
+	// Protected --------------
+
+	// Variables -----------------------------
+
+	// Public -----------------
 
 	public $slug;
+	public $type			= CoreGlobal::TYPE_SITE;
+
 	public $ajaxUrl;
+
 	public $cmtController	= null;
 	public $cmtAction		= null;
 
-	// Instance Methods --------------------------------------------
+	// Protected --------------
 
-	// yii\base\Widget
+	protected $formService;
+
+	// Private ----------------
+
+	// Traits ------------------------------------------------------
+
+	// Constructor and Initialisation ------------------------------
+
+	public function init() {
+
+		parent::init();
+
+		$this->formService = Yii::$app->factory->get( 'formService' );
+	}
+
+	// Instance methods --------------------------------------------
+
+	// Yii interfaces ------------------------
+
+	// Yii parent classes --------------------
+
+	// yii\base\Widget --------
 
 	public function run() {
 
 		if( $this->loadAssets ) {
 
-			FormAssetBundle::register( $this->getView() );
+			FormAssets::register( $this->getView() );
 		}
 
 		return parent::run();
     }
 
-	// AjaxForm
+	// CMG interfaces ------------------------
 
-    public function renderForm() {
+	// CMG parent classes --------------------
+
+    public function renderWidget( $config = [] ) {
 
 		// Form and Fields
-		$this->form		= FormService::findBySlug( $this->slug );
+		if( !isset( $this->form ) && isset( $this->slug ) ) {
+
+			$this->form		= $this->formService->getBySlugType( $this->slug, $this->type );
+		}
 
 		if( isset( $this->form ) && $this->form->active ) {
 
 			// fields and html
-			$fieldsHtml		= FormUtil::getApixFieldsHtml( $this->form, [ 'label' => $this->showLabel ] );
+			$fieldsHtml		= FormUtil::getApixFieldsHtml( $this->form, $this->model, [ 'label' => $this->showLabel, 'modelName' => $this->modelName ] );
 			$captchaHtml	= null;
 
 			// Views Path
@@ -58,7 +98,7 @@ class AjaxForm extends \cmsgears\widgets\form\BaseForm {
 			if( !isset( $this->ajaxUrl ) ) {
 
 				$formSlug		= $this->form->slug;
-				$this->ajaxUrl	= Url::toRoute( [ "/apix/form/$formSlug" ], true );	
+				$this->ajaxUrl	= "form/$formSlug";
 			}
 
 			if( $this->form->captcha ) {
@@ -97,9 +137,11 @@ class AjaxForm extends \cmsgears\widgets\form\BaseForm {
 		}
 		else {
 
-			echo "<div class='warning'>Form not found or submission is disabled by site admin.</div>";	
+			echo "<div class='warning'>Form not found or submission is disabled by site admin.</div>";
 		}
 	}
+
+	// AjaxForm ------------------------------
 }
 
 ?>
