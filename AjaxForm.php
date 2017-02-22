@@ -34,6 +34,7 @@ class AjaxForm extends \cmsgears\widgets\form\BaseForm {
 
 	public $ajaxUrl;
 
+	public $cmtApp			= null;
 	public $cmtController	= null;
 	public $cmtAction		= null;
 
@@ -110,17 +111,23 @@ class AjaxForm extends \cmsgears\widgets\form\BaseForm {
 
 			$this->options[ 'action' ]			= $this->ajaxUrl;
 			$this->options[ 'method' ]			= 'post';
+			$this->options[ 'cmt-app' ]			= 'form';
 			$this->options[ 'cmt-controller' ]	= 'form';
-			$this->options[ 'cmt-action' ]		= 'generic';
+			$this->options[ 'cmt-action' ]		= 'default';
 
 			if( !isset( $this->options[ 'class' ] ) ) {
 
-				$this->options[ 'class' ]	= 'cmt-form';
+				$this->options[ 'class' ]	= 'cmg-form';
 			}
 
 			if( !isset( $this->options[ 'id' ] ) ) {
 
 				$this->options[ 'id' ]	= "frm-$this->slug";
+			}
+
+			if( isset( $this->cmtApp ) ) {
+
+				$this->options[ 'cmt-app' ]	= $this->cmtApp;
 			}
 
 			if( isset( $this->cmtController ) ) {
@@ -142,6 +149,5 @@ class AjaxForm extends \cmsgears\widgets\form\BaseForm {
 	}
 
 	// AjaxForm ------------------------------
-}
 
-?>
+}

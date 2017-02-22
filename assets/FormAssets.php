@@ -21,7 +21,7 @@ class FormAssets extends \yii\web\AssetBundle {
 	// Load Javascript
 
     public $js      = [
-		'scripts/api-processor.js'
+		'scripts/apps/form.js'
     ];
 
 	// Define the Position to load Assets
@@ -42,5 +42,3 @@ class FormAssets extends \yii\web\AssetBundle {
 		parent::__construct();
 	}
 }
-
-?>

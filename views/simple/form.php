@@ -10,4 +10,6 @@
 	<input class="btn btn-small" type="submit" name="submit" value="Submit">
 </div>
 
+<div class="message success"></div>
 <div class="message warning"></div>
+<div class="message error"></div>
