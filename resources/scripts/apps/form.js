@@ -16,8 +16,6 @@ jQuery( document ).ready( function() {
 	});
 });
 
-// == Form App Controllers ===================================
-
 // == Form Controller =====================
 
 FormController	= function() {
@@ -26,7 +24,7 @@ FormController	= function() {
 
 FormController.inherits( cmt.api.controllers.BaseController );
 
-FormController.prototype.defaultActionPost = function( success, parentElement, message, response ) {
+FormController.prototype.defaultActionPost = function( success, requestElement, response ) {
 
 	if( success ) {
 
