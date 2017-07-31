@@ -1,33 +1,36 @@
-var formApp	= null;
+// == Application =========================
 
 jQuery( document ).ready( function() {
 
-	// App
-	formApp	= new cmt.api.Application( { basePath: ajaxUrl } );
+	var formApp	= cmt.api.root.registerApplication( 'form', 'cmt.api.Application', { basePath: ajaxUrl } );
 
-	// Controllers
-	var controllers			= [];
-	controllers[ 'form' ]	= 'FormController';
+	formApp.mapController( 'form', 'cmg.controllers.FormController' );
 
-	// Init App
-	jQuery( '[cmt-app=form]' ).cmtRequestProcessor({
-		app: formApp,
-		controllers: controllers
-	});
+	cmt.api.utils.request.register( formApp, jQuery( '[cmt-app=form]' ) );
 });
+
+// == Controller Namespace ================
+
+var cmg = cmg || {};
+
+cmg.controllers = cmg.controllers || {};
 
 // == Form Controller =====================
 
-FormController	= function() {
+cmg.controllers.FormController	= function() { };
 
+cmg.controllers.FormController.inherits( cmt.api.controllers.RequestController );
+
+cmg.controllers.FormController.prototype.defaultActionSuccess = function( requestElement, response ) {
+
+	console.log( 'form processed successfully.' );
 };
 
-FormController.inherits( cmt.api.controllers.BaseController );
+cmg.controllers.FormController.prototype.defaultActionFailure = function( requestElement, response ) {
 
-FormController.prototype.defaultActionPost = function( success, requestElement, response ) {
-
-	if( success ) {
-
-		console.log( "form processed successfully." );
-	}
+	console.log( 'form processing failed.' );
 };
+
+// == Direct Calls ========================
+
+// == Additional Methods ==================
