@@ -1,4 +1,4 @@
-Project 	- CMSGears (http://www.cmsgears.org)
+Project 	- CMSGears (https://www.cmsgears.org)
 
 Widget  	- Ajax Form
 

@@ -6,22 +6,25 @@ use yii\web\View;
 
 class FormAssets extends \yii\web\AssetBundle {
 
-	// Public variables --------------------------------------------
+	// Variables ---------------------------------------------------
 
-	// Path Configuration
+	// Globals -------------------------------
 
-    public $sourcePath = '@cmsgears/widget-form-ajax/resources';
+	// Constants --------------
 
-	// Load CSS
+	// Public -----------------
 
-	public $css     = [
-		// specify styles
-    ];
+	// Protected --------------
+
+	// Variables -----------------------------
+
+	// Public -----------------
+
+	public $sourcePath = '@cmsgears/widget-form-ajax/resources';
 
 	// Load Javascript
-
     public $js      = [
-		'scripts/api-processor.js'
+		'scripts/apps/form.js'
     ];
 
 	// Define the Position to load Assets
@@ -31,16 +34,35 @@ class FormAssets extends \yii\web\AssetBundle {
 
 	// Define dependent Asset Loaders
     public $depends = [
-		'yii\web\JqueryAsset',
+		'cmsgears\core\common\assets\Jquery',
 		'cmsgears\core\common\assets\CmgToolsJs'
     ];
 
+	// Protected --------------
+
+	// Private ----------------
+
+	// Traits ------------------------------------------------------
+
 	// Constructor and Initialisation ------------------------------
 
-	public function __construct() {
+	public function init()  {
 
-		parent::__construct();
+		parent::init();
+
+		// Override assets
 	}
-}
 
-?>
+	// Instance methods --------------------------------------------
+
+	// Yii interfaces ------------------------
+
+	// Yii parent classes --------------------
+
+	// CMG interfaces ------------------------
+
+	// CMG parent classes --------------------
+
+	// FormAssets ----------------------------
+
+}
