@@ -84,7 +84,7 @@ class AjaxForm extends \cmsgears\widgets\form\BaseForm {
 			$this->form		= $this->formService->getBySlugType( $this->slug, $this->type );
 		}
 
-		if( isset( $this->form ) && $this->form->active ) {
+		if( isset( $this->form ) && $this->form->isActive() ) {
 
 			// fields and html
 			$fieldsHtml		= FormUtil::getApixFieldsHtml( $this->form, $this->model, [ 'label' => $this->showLabel, 'modelName' => $this->modelName ] );
