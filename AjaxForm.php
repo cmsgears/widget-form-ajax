@@ -1,4 +1,12 @@
 <?php
+/**
+ * This file is part of CMSGears Framework. Please view License file distributed
+ * with the source code for license details.
+ *
+ * @link https://www.cmsgears.org/
+ * @copyright Copyright (c) 2015 VulpineCode Technologies Pvt. Ltd.
+ */
+
 namespace cmsgears\widgets\aform;
 
 // Yii Imports
@@ -10,9 +18,16 @@ use cmsgears\core\common\config\CoreGlobal;
 
 use cmsgears\widgets\aform\assets\FormAssets;
 
+use cmsgears\widgets\form\BaseForm;
+
 use cmsgears\core\common\utilities\FormUtil;
 
-class AjaxForm extends \cmsgears\widgets\form\BaseForm {
+/**
+ * AjaxForm submits dynamic form using ajax.
+ *
+ * @since 1.0.0
+ */
+class AjaxForm extends BaseForm {
 
 	// Variables ---------------------------------------------------
 
@@ -28,8 +43,12 @@ class AjaxForm extends \cmsgears\widgets\form\BaseForm {
 
 	// Public -----------------
 
+	public $wrap	= true;
+	public $wrapper = 'form';
+
 	public $slug;
-	public $type			= CoreGlobal::TYPE_SITE;
+
+	public $type = CoreGlobal::TYPE_SITE;
 
 	public $ajaxUrl;
 
@@ -39,7 +58,7 @@ class AjaxForm extends \cmsgears\widgets\form\BaseForm {
 
 	// Protected --------------
 
-	protected $formService;
+	protected $modelService;
 
 	// Private ----------------
 
@@ -51,7 +70,7 @@ class AjaxForm extends \cmsgears\widgets\form\BaseForm {
 
 		parent::init();
 
-		$this->formService = Yii::$app->factory->get( 'formService' );
+		$this->modelService = Yii::$app->factory->get( 'formService' );
 	}
 
 	// Instance methods --------------------------------------------
@@ -79,15 +98,15 @@ class AjaxForm extends \cmsgears\widgets\form\BaseForm {
     public function renderWidget( $config = [] ) {
 
 		// Form and Fields
-		if( !isset( $this->form ) && isset( $this->slug ) ) {
+		if( !isset( $this->model ) && isset( $this->slug ) ) {
 
-			$this->form		= $this->formService->getBySlugType( $this->slug, $this->type );
+			$this->model = $this->modelService->getBySlugType( $this->slug, $this->type );
 		}
 
-		if( isset( $this->form ) && $this->form->isActive() ) {
+		if( isset( $this->model ) && $this->model->isActive() ) {
 
 			// fields and html
-			$fieldsHtml		= FormUtil::getApixFieldsHtml( $this->form, $this->model, [ 'label' => $this->showLabel, 'modelName' => $this->modelName ] );
+			$fieldsHtml		= FormUtil::getApixFieldsHtml( $this->model, $this->form, [ 'label' => $this->label, 'modelName' => $this->formName ] );
 			$captchaHtml	= null;
 
 			// Views Path
@@ -97,16 +116,16 @@ class AjaxForm extends \cmsgears\widgets\form\BaseForm {
 			// submit url
 			if( !isset( $this->ajaxUrl ) ) {
 
-				$formSlug		= $this->form->slug;
+				$formSlug		= $this->model->slug;
 				$this->ajaxUrl	= "form/$formSlug";
 			}
 
-			if( $this->form->captcha ) {
+			if( $this->model->captcha ) {
 
-				$captchaHtml	= $this->render( $captchaPath );
+				$captchaHtml = $this->render( $captchaPath );
 			}
 
-			$formHtml 		= $this->render( $formPath, [ 'fieldsHtml' => $fieldsHtml, 'captchaHtml' => $captchaHtml ] );
+			$formHtml = $this->render( $formPath, [ 'fieldsHtml' => $fieldsHtml, 'captchaHtml' => $captchaHtml ] );
 
 			$this->options[ 'action' ]			= $this->ajaxUrl;
 			$this->options[ 'method' ]			= 'post';
@@ -116,12 +135,12 @@ class AjaxForm extends \cmsgears\widgets\form\BaseForm {
 
 			if( !isset( $this->options[ 'class' ] ) ) {
 
-				$this->options[ 'class' ]	= 'cmg-form';
+				$this->options[ 'class' ] = 'cmg-form';
 			}
 
 			if( !isset( $this->options[ 'id' ] ) ) {
 
-				$this->options[ 'id' ]	= "frm-$this->slug";
+				$this->options[ 'id' ] = "frm-$this->slug";
 			}
 
 			if( isset( $this->cmtApp ) ) {
@@ -131,19 +150,24 @@ class AjaxForm extends \cmsgears\widgets\form\BaseForm {
 
 			if( isset( $this->cmtController ) ) {
 
-				$this->options[ 'cmt-controller' ]	= $this->cmtController;
+				$this->options[ 'cmt-controller' ] = $this->cmtController;
 			}
 
 			if( isset( $this->cmtAction ) ) {
 
-				$this->options[ 'cmt-action' ]	= $this->cmtAction;
+				$this->options[ 'cmt-action' ] = $this->cmtAction;
 			}
 
-	        return Html::tag( 'form', $formHtml, $this->options );
+			if( $this->wrap ) {
+
+				return Html::tag( $this->wrapper, $formHtml, $this->options );
+			}
+
+			return $formHtml;
 		}
 		else {
 
-			echo "<div class='warning'>Form not found or submission is disabled by site admin.</div>";
+			echo "<div class=\"warning\">Form not found or submission is disabled.</div>";
 		}
 	}
 
