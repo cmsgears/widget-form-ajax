@@ -32,7 +32,7 @@ class FormAssets extends AssetBundle {
 	public $sourcePath = '@cmsgears/widget-form-ajax/resources';
 
 	// Load Javascript
-    public $js      = [
+    public $js = [
 		'scripts/apps/form.js'
     ];
 

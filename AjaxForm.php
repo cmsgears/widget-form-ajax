@@ -127,6 +127,10 @@ class AjaxForm extends BaseForm {
 
 			$formHtml = $this->render( $formPath, [ 'fieldsHtml' => $fieldsHtml, 'captchaHtml' => $captchaHtml ] );
 
+			// Prepare Form Options
+			$modelOptions	= json_decode( $this->model->htmlOptions, true );
+			$this->options	= \yii\helpers\ArrayHelper::merge( $this->options, $modelOptions );
+
 			$this->options[ 'action' ]			= $this->ajaxUrl;
 			$this->options[ 'method' ]			= 'post';
 			$this->options[ 'cmt-app' ]			= 'form';
