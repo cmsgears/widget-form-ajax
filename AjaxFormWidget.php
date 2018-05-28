@@ -23,11 +23,11 @@ use cmsgears\widgets\form\BaseForm;
 use cmsgears\core\common\utilities\FormUtil;
 
 /**
- * AjaxForm submits dynamic form using ajax.
+ * AjaxFormWidget submits dynamic form using ajax.
  *
  * @since 1.0.0
  */
-class AjaxForm extends BaseForm {
+class AjaxFormWidget extends BaseForm {
 
 	// Variables ---------------------------------------------------
 
@@ -48,7 +48,7 @@ class AjaxForm extends BaseForm {
 
 	public $slug;
 
-	public $type = CoreGlobal::TYPE_SITE;
+	public $type = CoreGlobal::TYPE_FORM;
 
 	public $ajaxUrl;
 
@@ -128,7 +128,8 @@ class AjaxForm extends BaseForm {
 			$formHtml = $this->render( $formPath, [ 'fieldsHtml' => $fieldsHtml, 'captchaHtml' => $captchaHtml ] );
 
 			// Prepare Form Options
-			$modelOptions	= json_decode( $this->model->htmlOptions, true );
+			$modelOptions	= !empty( $this->model->htmlOptions ) ? json_decode( $this->model->htmlOptions, true ) : [];
+
 			$this->options	= \yii\helpers\ArrayHelper::merge( $this->options, $modelOptions );
 
 			$this->options[ 'action' ]			= $this->ajaxUrl;
@@ -175,6 +176,6 @@ class AjaxForm extends BaseForm {
 		}
 	}
 
-	// AjaxForm ------------------------------
+	// AjaxFormWidget ------------------------
 
 }
