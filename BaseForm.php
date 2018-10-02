@@ -7,13 +7,17 @@
  * @copyright Copyright (c) 2015 VulpineCode Technologies Pvt. Ltd.
  */
 
-namespace cmsgears\widgets\aform\assets;
+namespace cmsgears\widgets\form;
 
-// Yii Imports
-use yii\web\AssetBundle;
-use yii\web\View;
+// CMG Imports
+use cmsgears\core\common\base\Widget;
 
-class FormAssets extends AssetBundle {
+/**
+ * BaseForm is the base class for dynamic forms.
+ *
+ * @since 1.0.0
+ */
+abstract class BaseForm extends Widget {
 
 	// Variables ---------------------------------------------------
 
@@ -29,23 +33,33 @@ class FormAssets extends AssetBundle {
 
 	// Public -----------------
 
-	public $sourcePath = '@cmsgears/widget-form-ajax/resources';
+	/**
+	 * Form model for which form has to be submitted.
+	 *
+	 * @var \cmsgears\core\common\models\resources\Form
+	 */
+    public $model;
 
-	// Load Javascript
-    public $js = [
-		'scripts/apps/form.js'
-    ];
+	/**
+	 * The form model to be submitted for the form.
+	 *
+	 * @var \cmsgears\core\common\models\forms\GenericForm
+	 */
+	public $form;
 
-	// Define the Position to load Assets
-    public $jsOptions = [
-        'position' => View::POS_END
-    ];
+	/**
+	 * Model name used to collect form fields.
+	 *
+	 * @var string
+	 */
+	public $formName;
 
-	// Define dependent Asset Loaders
-    public $depends = [
-		'cmsgears\assets\jquery\Jquery',
-		'cmsgears\assets\cmgtools\Velocity'
-    ];
+	/**
+	 * Flag to check whether form labels are displayed.
+	 *
+	 * @var boolean
+	 */
+	public $labels = true;
 
 	// Protected --------------
 
@@ -61,10 +75,12 @@ class FormAssets extends AssetBundle {
 
 	// Yii parent classes --------------------
 
+	// yii\base\Widget --------
+
 	// CMG interfaces ------------------------
 
 	// CMG parent classes --------------------
 
-	// FormAssets ----------------------------
+	// BaseForm ------------------------------
 
 }
