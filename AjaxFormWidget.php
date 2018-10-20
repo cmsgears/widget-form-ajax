@@ -52,9 +52,9 @@ class AjaxFormWidget extends BaseForm {
 
 	public $ajaxUrl;
 
-	public $cmtApp			= null;
-	public $cmtController	= null;
-	public $cmtAction		= null;
+	public $cmtApp			= 'forms';
+	public $cmtController	= 'form';
+	public $cmtAction		= 'default';
 
 	// Protected --------------
 
