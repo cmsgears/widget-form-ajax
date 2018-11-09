@@ -50,6 +50,8 @@ class AjaxFormWidget extends BaseForm {
 
 	public $type = CoreGlobal::TYPE_FORM;
 
+	public $spinner = 'cmti cmti-3x cmti-spinner-10';
+
 	public $ajaxUrl;
 
 	public $cmtApp			= 'forms';
@@ -125,12 +127,12 @@ class AjaxFormWidget extends BaseForm {
 				$captchaHtml = $this->render( $captchaPath );
 			}
 
-			$formHtml = $this->render( $formPath, [ 'fieldsHtml' => $fieldsHtml, 'captchaHtml' => $captchaHtml ] );
+			$formHtml = $this->render( $formPath, [ 'widget' => $this, 'fieldsHtml' => $fieldsHtml, 'captchaHtml' => $captchaHtml ] );
 
 			// Prepare Form Options
-			$modelOptions	= !empty( $this->model->htmlOptions ) ? json_decode( $this->model->htmlOptions, true ) : [];
+			$modelOptions = !empty( $this->model->htmlOptions ) ? json_decode( $this->model->htmlOptions, true ) : [];
 
-			$this->options	= \yii\helpers\ArrayHelper::merge( $this->options, $modelOptions );
+			$this->options = \yii\helpers\ArrayHelper::merge( $this->options, $modelOptions );
 
 			$this->options[ 'action' ]			= $this->ajaxUrl;
 			$this->options[ 'method' ]			= 'post';

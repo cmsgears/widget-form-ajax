@@ -1,5 +1,7 @@
-<div class="max-area-cover spinner">
-	<div class="valign-center cmti cmti-3x cmti-spinner-1 spin"></div>
+<div class="spinner max-area-cover bkg-transparent bkg-transparent-black">
+	<div class="wrap-spinner valign-center">
+		<i class="<?= $widget->spinner ?> spin text text-white"></i>
+	</div>
 </div>
 
 <?= $fieldsHtml ?>
