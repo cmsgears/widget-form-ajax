@@ -18,8 +18,6 @@ use cmsgears\core\common\config\CoreGlobal;
 
 use cmsgears\widgets\aform\assets\FormAssets;
 
-use cmsgears\widgets\form\BaseForm;
-
 use cmsgears\core\common\utilities\FormUtil;
 
 /**
@@ -27,7 +25,7 @@ use cmsgears\core\common\utilities\FormUtil;
  *
  * @since 1.0.0
  */
-class AjaxFormWidget extends BaseForm {
+class AjaxFormWidget extends \cmsgears\widgets\form\BaseForm {
 
 	// Variables ---------------------------------------------------
 
