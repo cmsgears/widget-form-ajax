@@ -114,7 +114,7 @@ class AjaxFormWidget extends \cmsgears\widgets\form\BaseForm {
 			$captchaPath	= "$this->template/captcha";
 
 			// submit url
-			if( !isset( $this->ajaxUrl ) ) {
+			if( empty( $this->ajaxUrl ) ) {
 
 				$formSlug		= $this->model->slug;
 				$this->ajaxUrl	= "form/$formSlug";
