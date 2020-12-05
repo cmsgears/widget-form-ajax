@@ -8,5 +8,5 @@ use cmsgears\core\common\widgets\Captcha;
 		'options' => [ 'placeholder' => 'Captcha Key*' ]
 	])?>
 	<span class="info">Click the Captcha Image to get new code.</span>
-	<span class="error" cmt-error="captcha"></span>
+	<span class="error" cmt-error="GenericForm[captcha]"></span>
 </div>
