@@ -1,7 +1,7 @@
 <?php
 use cmsgears\core\common\widgets\Captcha;
 ?>
-<div class="form-group captcha-wrap clearfix">
+<div class="form-group captcha-wrap clearfix clear relative">
 	<?= Captcha::widget([
 		'name' => 'GenericForm[captcha]',
 		'captchaAction' => '/forms/form/acaptcha',
