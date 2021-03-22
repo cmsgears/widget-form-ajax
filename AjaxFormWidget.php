@@ -18,8 +18,6 @@ use cmsgears\core\common\config\CoreGlobal;
 
 use cmsgears\widgets\aform\assets\FormAssets;
 
-use cmsgears\widgets\form\BaseForm;
-
 use cmsgears\core\common\utilities\FormUtil;
 
 /**
@@ -27,7 +25,7 @@ use cmsgears\core\common\utilities\FormUtil;
  *
  * @since 1.0.0
  */
-class AjaxFormWidget extends BaseForm {
+class AjaxFormWidget extends \cmsgears\widgets\form\BaseForm {
 
 	// Variables ---------------------------------------------------
 
@@ -44,7 +42,7 @@ class AjaxFormWidget extends BaseForm {
 	// Public -----------------
 
 	public $wrap	= true;
-	public $wrapper = 'form';
+	public $wrapper = 'div';
 
 	public $slug;
 
@@ -116,7 +114,7 @@ class AjaxFormWidget extends BaseForm {
 			$captchaPath	= "$this->template/captcha";
 
 			// submit url
-			if( !isset( $this->ajaxUrl ) ) {
+			if( empty( $this->ajaxUrl ) ) {
 
 				$formSlug		= $this->model->slug;
 				$this->ajaxUrl	= "form/$formSlug";
@@ -133,37 +131,6 @@ class AjaxFormWidget extends BaseForm {
 			$modelOptions = !empty( $this->model->htmlOptions ) ? json_decode( $this->model->htmlOptions, true ) : [];
 
 			$this->options = \yii\helpers\ArrayHelper::merge( $this->options, $modelOptions );
-
-			$this->options[ 'action' ]			= $this->ajaxUrl;
-			$this->options[ 'method' ]			= 'post';
-			$this->options[ 'cmt-app' ]			= 'form';
-			$this->options[ 'cmt-controller' ]	= 'form';
-			$this->options[ 'cmt-action' ]		= 'default';
-
-			if( !isset( $this->options[ 'class' ] ) ) {
-
-				$this->options[ 'class' ] = 'cmg-form';
-			}
-
-			if( !isset( $this->options[ 'id' ] ) ) {
-
-				$this->options[ 'id' ] = "frm-$this->slug";
-			}
-
-			if( isset( $this->cmtApp ) ) {
-
-				$this->options[ 'cmt-app' ]	= $this->cmtApp;
-			}
-
-			if( isset( $this->cmtController ) ) {
-
-				$this->options[ 'cmt-controller' ] = $this->cmtController;
-			}
-
-			if( isset( $this->cmtAction ) ) {
-
-				$this->options[ 'cmt-action' ] = $this->cmtAction;
-			}
 
 			if( $this->wrap ) {
 
